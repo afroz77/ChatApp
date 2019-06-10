@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+{% extends "dappx/base.html" %}
+{% block body_block %}
+<html>
+<head>
+    <style>
+#body {
+  width:700px;
+  background-color: #cccccc;
+ background-image: radial-gradient(#ffc042, #8fdcff);
+}
+</style>
+    <meta charset="utf-8"/>
+    <title>Chat Rooms</title>
+</head>
+<body>
+<div class="container">
+      <center>
+    <div class="jumbotron" id="body">
+    {% if user.is_authenticated %}
+    <h3> Hello <span style="color:green ">{{ user.username }}</span>&nbsp;<small>Please Enter Room Name For Chatting</small> </h3>
+    <input id="room-name-input" required="required" type="text" size="60"/><br/><br/>
+    <input id="room-name-submit" class="btn btn-primary float-right" type="button" value="Enter"/>
+    {% else %}
+    <h4> Please Login First </h4>
+    {% endif %}
+    </div></center></div>
+    <script>
+        document.querySelector('#room-name-input').focus();
+        document.querySelector('#room-name-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#room-name-submit').click();
+            }
+        };
+
+        document.querySelector('#room-name-submit').onclick = function(e) {
+            var roomName = document.querySelector('#room-name-input').value;
+            window.location.pathname = '/chatapp/' + roomName + '/';
+        };
+    </script>
+</body>
+</html>
+{% endblock %}

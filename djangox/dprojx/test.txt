@@ -1,0 +1,32 @@
+def signup(request):
+    # this method is used to sign up
+
+    if request.method == 'POST':        # post will process the form data
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+            current_site = get_current_site(request)
+            subject = 'Activate Your MySite Account'
+            message = render_to_string('fundoo/acc_active_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                # takes user id and generates the base64 code(uidb64)
+                # Here we receive uidb64, token. By using the "urlsafe_base64_decode"
+                # we decode the base64 encoded uidb64 user id.
+                # We query the database with user id to get user
+                'token': account_activation_token.make_token(user),
+                # takes the user object and generates the onetime usable token for the user(token)
+            })
+            # here we are sending the the activation link to the given email id
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(
+                subject, message, to=[to_email]
+            )
+            email.send()
+            return HttpResponse('Activation link has been sent to the given mail id')
+
+    else:
+        form = SignUpForm()
+    return render(request, 'fundoo/signup.html', {'form': form})

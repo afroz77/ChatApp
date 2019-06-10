@@ -1,0 +1,15 @@
+from django.shortcuts import render
+from django.utils.safestring import mark_safe
+from django.contrib.auth.models import User
+import json
+
+
+def index(request):
+    return render(request, 'chatapp/index.html', {})
+
+
+def room(request, room_name):
+    return render(request, 'chatapp/room.html', {
+        'room_name_json': mark_safe(json.dumps(room_name))
+    })
+

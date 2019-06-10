@@ -1,0 +1,13 @@
+{% extends "dappx/base.html" %}
+{% block body_block %}
+<div class="container">
+  <div class="jumbotron">
+    <h1 style="color:orange"> Welcome to the ChatApp</h1>
+    {% if user.is_authenticated %}
+        <h2 style="color:green">Hello {{ user.username }}</h2>
+    {% else %}
+        <h2 style="color:red">Register or Login</h2>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

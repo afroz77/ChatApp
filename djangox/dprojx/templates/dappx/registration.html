@@ -1,0 +1,29 @@
+{% extends "dappx/base.html" %}
+{% load staticfiles %}
+{% block body_block %}
+<style>
+#body {
+  width:700px;
+  background-color: #cccccc;
+ background-image: radial-gradient(#ffc042, #8fdcff);
+}
+</style>
+  <div class="container">
+      <center>
+    <div class="jumbotron" id="body">
+      {% if registered %}
+        <h2>Thank you for registering!</h2>
+      {% else %}
+        <h2>Register Here
+        <small>Just fill out the form.</small></h2><br />
+        <form enctype="multipart/form-data" method="POST">
+          {% csrf_token %}
+          {{ user_form.as_p }}
+          <!-- {{ profile_form.as_p }} -->
+          <input type="submit" class="btn btn-primary" name="" value="Register">
+        </form>
+        
+      {% endif %}
+    </div></center>
+  </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'dappx/base.html' %}
+{% block body_block %}
+<style>
+#body {
+  width:400px;
+  background-color: #cccccc;
+ background-image: radial-gradient(#ffc042, #8fdcff);
+}
+</style>
+  <div class="container">
+    <center>
+    <div id="body" class="text-center jumbotron">
+      <h2 class="text-center">Enter Login Details </h2><br>
+        <form method="post" action="{% url 'dappx:user_login' %}">
+          {% csrf_token %}
+          {# A more "HTML" way of creating the login form#}
+            <label for="username">Username:</label>
+            <input type="text" name="username" placeholder="Username"><br ><br >
+            <label for="password">Password:</label>
+            <input type="password" name="password" placeholder="Password"><br><br>
+            <input type="submit" class='btn btn-primary' name="" value="Login">
+            <a class="btn btn-warning" href="{% url 'password_reset' %}">Reset Password</a>
+        </form>
+      </div>
+    </center>
+  </div>
+{% endblock %}
